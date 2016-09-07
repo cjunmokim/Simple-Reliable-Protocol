@@ -1,41 +1,21 @@
-Lab 6 Readme
+Simple Reliable Protocol
 
 ***********
-DISCLAIMERS
+Description
 ***********
 
+This project implements a subset of the TCP/IP that handles parallel connections (threading), data corruption, packet loss among others.
+Please download the code and follow the instructions below to run. 
+To ensure the project is behaving appropriately, send over files (Moby Dick or the Constitution both of which can be found in the repository) from one machine and make sure all the other machines receive them.
+Files as long as (or longer than) Moby Dick (~1.2MB) require a longer WAITTIME in app_stress_client.c.
+For Moby Dick, I was able to send all the data by calling sleep(WAITTIME * 5).
 
 
-1. I have used the provided code for app_simple_client.c, app_stress_client.c,
-app_simple_server.c, app_stress_server.c, srt_client.c, and most of srt_server.c.
-One exception is the srt_server_recv() function in srt_server.c. For this function,
-I used my own code from Lab5 because I thought the provided code had a loophole.
-I also made minor changes to the provided code in various sections. All the other code is my own.
+********************
+BUILDING AND RUNNING
+********************
 
-2. I have tested the stress case with various files of various lengths. For files as long as (or longer than) Moby Dick (~1.2MB) require a longer WAITTIME in app_stress_client.c. For Moby Dick, I was able to send all the data by calling
-sleep(WAITTIME * 5).
-
-3. When there is only one SNP connection alive, then we need to Ctrl+C twice to
-kill the SNP layer. This is because the SNP blocks in the recv() from the ON, when
-there are no packets that the ON can send to the SNP since all the neighboring ONs
-have their SNPs killed. Thus, Ctrl+C once will kill routeupdate_daemon() but not
-pkt_handler().
-
-
-
-********************************************************************************
-********************************************************************************
-
-
-
-
-Implement the various functions in the different directories.  The
-app_{simple/stress}_{client/server}.c are provided to you to test.
-Some functions you have already implemented in previous labs.
-
-BUILDING AND RUNNING:
-
-4 machines are used: bear, green, spruce, gile
+This project has been tested with up to 4 different machines running simultaneously.
 
 Use make to compile.
 To run the application:
