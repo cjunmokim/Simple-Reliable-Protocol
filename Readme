@@ -1,0 +1,56 @@
+Lab 6 Readme
+
+***********
+DISCLAIMERS
+***********
+
+
+
+1. I have used the provided code for app_simple_client.c, app_stress_client.c,
+app_simple_server.c, app_stress_server.c, srt_client.c, and most of srt_server.c.
+One exception is the srt_server_recv() function in srt_server.c. For this function,
+I used my own code from Lab5 because I thought the provided code had a loophole.
+I also made minor changes to the provided code in various sections. All the other code is my own.
+
+2. I have tested the stress case with various files of various lengths. For files as long as (or longer than) Moby Dick (~1.2MB) require a longer WAITTIME in app_stress_client.c. For Moby Dick, I was able to send all the data by calling
+sleep(WAITTIME * 5).
+
+3. When there is only one SNP connection alive, then we need to Ctrl+C twice to
+kill the SNP layer. This is because the SNP blocks in the recv() from the ON, when
+there are no packets that the ON can send to the SNP since all the neighboring ONs
+have their SNPs killed. Thus, Ctrl+C once will kill routeupdate_daemon() but not
+pkt_handler().
+
+
+
+********************************************************************************
+********************************************************************************
+
+
+
+
+Implement the various functions in the different directories.  The
+app_{simple/stress}_{client/server}.c are provided to you to test.
+Some functions you have already implemented in previous labs.
+
+BUILDING AND RUNNING:
+
+4 machines are used: bear, green, spruce, gile
+
+Use make to compile.
+To run the application:
+1, start the overlay processes:
+	At each node, goto overlay directory: run ./overlay&
+	The overlay processes on 4 nodes should be started within 1 min.
+	wait until you see: waiting connection from network layer on all the nodes.
+2. start the network processes:
+	At each node, goto network directory: run ./network&
+	wait until you see: waiting for connection from SRT process on all the nodes.
+3. start the transport processes and run the application:
+	AT one node, goto server dicrectory: run ./app_simple_app or ./app_stress_app
+	At another node, goto client directory: run ./app_simple_app or ./app_stress_app
+
+To stop the program:
+use kill -s 2 processID to kill the network processes and overlay processes
+
+If the port numbers used by the program are used already, the program exits.
